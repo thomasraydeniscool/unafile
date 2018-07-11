@@ -1,0 +1,30 @@
+{
+  "name": "unafile-api",
+  "description": "",
+  "license": "UNLICENSED",
+  "author": "Thomas Rayden",
+  "scripts": {
+    "start": "exit 0"
+  },
+  "dependencies": {
+    "change-case": "^3.0.2",
+    "express": "^4.16.3",
+    "got": "^8.3.2",
+    "puppeteer": "^1.5.0",
+    "raven": "^2.6.3",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/got": "^8.3.2",
+    "@types/node": "^10.5.2",
+    "@types/raven": "^2.5.1",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0",
+    "typescript": "^2.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unafile/unafile-api.git"
+  }
+}
