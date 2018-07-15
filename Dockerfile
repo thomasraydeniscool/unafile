@@ -15,14 +15,9 @@ RUN apt-get install -yq \
   fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
   ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
-# Not sure if we need these...
-RUN wget https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64.deb
-RUN dpkg -i dumb-init_*.deb && rm -f dumb-init_*.deb
-
 # Cleanup
 RUN apt-get clean
 RUN apt-get autoremove -y
-RUN rm -rf /var/lib/apt/lists/*
 
 # Setup project
 WORKDIR /unafile
