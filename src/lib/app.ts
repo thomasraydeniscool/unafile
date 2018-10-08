@@ -48,7 +48,9 @@ export class App {
     /**
      * Web Middleware
      */
-    custom(this.app);
+    if (custom) {
+      custom(this.app);
+    }
 
     /**
      * API Endpoints
