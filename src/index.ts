@@ -1,18 +1,16 @@
-import * as e from 'express';
-
 import { App } from './lib/app';
 
 import apiRouter from './api/api.router';
 
-const filety = new App([
+const unafile = new App([
   {
     path: '/api',
     router: apiRouter.routes
   }
 ]);
 
-filety.setup();
+unafile.setup();
 
-filety.start();
+unafile.start();
 
-export default filety;
+export default unafile;

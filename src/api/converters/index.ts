@@ -12,7 +12,7 @@ export class RootConverter {
   private functions: IConverters;
 
   constructor(from: string, to: string) {
-    this.name = changeCase.camelCase(from.concat(to));
+    this.name = changeCase.camelCase(`${from}-${to}`);
     this.functions = { htmlPdf, docxPdf };
   }
 

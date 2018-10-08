@@ -1,15 +1,25 @@
-import { Router, IRoutePost, RequestType } from 'express-mate';
+import { Router, RequestType } from 'express-mate';
 
 import { convert } from './api.controller';
 
-const POST: IRoutePost[] = [
+const GET = Router.createRoutes(RequestType.GET, [
   {
-    type: RequestType.POST,
+    path: '/',
+    steps: [
+      async (req, res) => {
+        res.end('hello world!');
+      }
+    ]
+  }
+]);
+
+const POST = Router.createRoutes(RequestType.POST, [
+  {
     path: '/convert',
     steps: [convert]
   }
-];
+]);
 
-const router = new Router([], [], POST);
+const router = new Router(GET, POST);
 
 export default router;
