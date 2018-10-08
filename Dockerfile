@@ -34,5 +34,3 @@ RUN npm prune --production
 
 # Run project
 RUN npm run start:deploy
-
-EXPOSE 80
