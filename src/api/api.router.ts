@@ -1,10 +1,15 @@
-import * as express from 'express';
-import { asyncSeries } from './shared/controller';
+import { Router, IRoutePost, RequestType } from 'express-mate';
 
 import { convert } from './api.controller';
 
-const router = express.Router();
+const POST: IRoutePost[] = [
+  {
+    type: RequestType.POST,
+    path: '/convert',
+    steps: [convert]
+  }
+];
 
-router.post('/convert', ...asyncSeries(convert));
+const router = new Router([], [], POST);
 
 export default router;

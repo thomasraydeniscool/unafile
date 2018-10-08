@@ -43,7 +43,6 @@ export class App {
     /**
      * API Middleware
      */
-    // this.app.use(Raven.requestHandler());
     this.app.use(e.json());
 
     /**
@@ -55,8 +54,6 @@ export class App {
      * API Endpoints
      */
     this.setupEndpoints();
-
-    // this.app.use(Raven.errorHandler());
   }
 
   private setupLogger(): void {

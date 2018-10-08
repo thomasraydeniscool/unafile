@@ -7,7 +7,7 @@ import apiRouter from './api/api.router';
 const filety = new App([
   {
     path: '/api',
-    router: apiRouter
+    router: apiRouter.routes
   }
 ]);
 

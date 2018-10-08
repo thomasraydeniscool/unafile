@@ -19,4 +19,8 @@ export class RootConverter {
   get function() {
     return this.functions[this.name];
   }
+
+  public setHeaders(res) {
+    res.setHeader('Content-Type', 'application/pdf');
+  }
 }
