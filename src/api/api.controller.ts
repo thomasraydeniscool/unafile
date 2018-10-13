@@ -43,7 +43,7 @@ export const convert = async (req, res) => {
   return new ApiSuccess(res, result.toString('base64'));
 };
 
-export const parseData = async data => {
+const parseData = async data => {
   if (!validator.isBase64(data)) {
     throw new Error('data must be of base64 encoding');
   }
@@ -53,7 +53,7 @@ export const parseData = async data => {
   return result;
 };
 
-export const parseUrl = async url => {
+const parseUrl = async url => {
   if (!validator.isURL(url)) {
     throw new Error('url is invalid');
   }

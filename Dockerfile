@@ -26,11 +26,20 @@ COPY . /unafile
 # Install npm dependancies
 RUN npm install
 
-# Build project
-CMD npm run build:deploy
+# Compile project
+RUN npm run build
 
 # Prune npm devDependancies
 RUN npm prune --production
 
 # Run project
-RUN npm run start:deploy
+RUN npm run deploy
+
+# Expose test port
+EXPOSE 3000
+
+##
+## unoconv does not seem to work without first running unoconv inside the Docker
+##
+## https://github.com/dagwieers/unoconv/issues/241
+##

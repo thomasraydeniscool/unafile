@@ -1,6 +1,7 @@
 import * as fs from 'fs';
+import * as path from 'path';
 import * as nanoid from 'nanoid';
-import * as unoconv from 'unoconv';
+import { exec } from 'child_process';
 
 // var unoconv = require('unoconv');
 
@@ -10,20 +11,25 @@ import * as unoconv from 'unoconv';
 // });
 
 export default async (data: Buffer): Promise<Buffer> => {
-  const temp = `./temp/${nanoid()}.docx`;
+  const temp = path.resolve(__dirname, `${nanoid()}.docx`);
+  let result;
 
   await writeTempFile(temp, data);
 
-  const result = await convertDocx(temp);
-
-  await removeTempFile(temp);
+  try {
+    result = await convertDocx(temp);
+    await removeTempFile(temp);
+  } catch (err) {
+    await removeTempFile(temp);
+    throw new Error(err);
+  }
 
   return result;
 };
 
-export const writeTempFile = (path: string, data: Buffer): Promise<void> => {
+const writeTempFile = (file: string, data: Buffer): Promise<void> => {
   return new Promise((resolve, reject) => {
-    fs.writeFile(path, data, err => {
+    fs.writeFile(file, data, err => {
       if (err) {
         reject(err);
       }
@@ -32,9 +38,9 @@ export const writeTempFile = (path: string, data: Buffer): Promise<void> => {
   });
 };
 
-export const removeTempFile = (path: string): Promise<void> => {
+const removeTempFile = (file: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    fs.unlink(path, err => {
+    fs.unlink(file, err => {
       if (err) {
         reject(err);
       }
@@ -43,13 +49,20 @@ export const removeTempFile = (path: string): Promise<void> => {
   });
 };
 
-const convertDocx = (path: string): Promise<Buffer> => {
+const convertDocx = (file: string): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
-    unoconv.convert(path, 'pdf', (err, result) => {
-      if (err) {
-        reject(err);
+    exec(
+      `unoconv -f pdf --stdout ${file}`,
+      { cwd: path.resolve(__dirname) },
+      (err, stdout, stderr) => {
+        if (err) {
+          reject(err);
+        }
+        if (stderr) {
+          reject(new Error(stderr));
+        }
+        resolve(Buffer.from(stdout));
       }
-      resolve(result);
-    });
+    );
   });
 };
