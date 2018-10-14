@@ -4,8 +4,8 @@
   "license": "UNLICENSED",
   "author": "Thomas Rayden",
   "scripts": {
-    "start": "ts-node ./src",
-    "deploy": "node ./dist",
+    "dev": "ts-node ./src",
+    "start": "node ./dist",
     "build": "tsc"
   },
   "dependencies": {

@@ -35,7 +35,7 @@ RUN npm run build
 RUN npm prune --production
 
 # Run project
-RUN npm run deploy
+RUN npm start
 
 # Expose test port
 EXPOSE 3000
