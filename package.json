@@ -1,10 +1,9 @@
 {
   "name": "unafile-api",
-  "description": "",
+  "description": "The brains behind the unafile project",
   "license": "UNLICENSED",
   "author": "Thomas Rayden",
   "scripts": {
-    "postinstall": "npm run build",
     "start": "ts-node ./src",
     "deploy": "node ./dist",
     "build": "tsc"

@@ -6,6 +6,8 @@ RUN apt-get update
 RUN apt-get install -yq \
   unoconv libreoffice-calc libreoffice-impress libreoffice-draw libreoffice-writer
 
+RUN unoconv --listener
+
 # Puppeteer
 RUN apt-get install -yq \
   gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
@@ -37,9 +39,3 @@ RUN npm run deploy
 
 # Expose test port
 EXPOSE 3000
-
-##
-## unoconv does not seem to work without first running unoconv inside the Docker
-##
-## https://github.com/dagwieers/unoconv/issues/241
-##
