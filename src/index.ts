@@ -1,4 +1,8 @@
-import { App } from './lib/app';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import { App } from './config/app';
+import env from './config/environment';
 
 import apiRouter from './api/api.router';
 
@@ -11,6 +15,6 @@ const unafile = new App([
 
 unafile.setup();
 
-unafile.start();
+unafile.start(env.PORT);
 
 export default unafile;
