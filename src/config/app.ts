@@ -1,4 +1,6 @@
 import * as e from 'express';
+import * as cors from 'cors';
+import * as compression from 'compression';
 import { createLogger, format, LogEntry, Logger, transports } from 'winston';
 
 export interface IEndpoint {
@@ -41,12 +43,13 @@ export class App {
 
   private setupExpress(custom: (app: e.Express) => void): void {
     /**
-     * API Middleware
+     * Express Middleware
      */
-    this.app.use(e.json());
+    this.app.use(cors({ origin: '*' }));
+    this.app.use(compression());
 
     /**
-     * Web Middleware
+     * Custom Middleware
      */
     if (custom) {
       custom(this.app);
