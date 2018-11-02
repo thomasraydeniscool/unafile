@@ -3,13 +3,6 @@ import * as path from 'path';
 import * as nanoid from 'nanoid';
 import { exec } from 'child_process';
 
-// var unoconv = require('unoconv');
-
-// unoconv.convert('document.docx', 'pdf', function(err, result) {
-//   // result is returned as a Buffer
-//   fs.writeFile('converted.pdf', result);
-// });
-
 export default async (data: Buffer): Promise<Buffer> => {
   const temp = path.resolve(__dirname, `${nanoid()}.docx`);
   let result;
@@ -54,14 +47,14 @@ const convertDocx = (file: string): Promise<Buffer> => {
     exec(
       `unoconv -f pdf --stdout ${file}`,
       { cwd: path.resolve(__dirname) },
-      (err, stdout, stderr) => {
+      (err, stdout: any, stderr) => {
         if (err) {
           reject(err);
         }
         if (stderr) {
           reject(new Error(stderr));
         }
-        resolve(Buffer.from(stdout));
+        resolve(Buffer.concat(stdout));
       }
     );
   });
