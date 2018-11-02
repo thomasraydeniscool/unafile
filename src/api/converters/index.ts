@@ -1,4 +1,5 @@
 import * as changeCase from 'change-case';
+import * as mime from 'mime';
 
 import docxPdf from './docxPdf';
 import htmlPdf from './htmlPdf';
@@ -21,6 +22,6 @@ export class RootConverter {
   }
 
   public setHeaders(res) {
-    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Type', mime.getType('pdf'));
   }
 }
