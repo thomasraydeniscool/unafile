@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as nanoid from 'nanoid';
-import { exec } from 'child_process';
+import * as child_process from 'child_process';
 
 export default async (data: Buffer): Promise<Buffer> => {
   const temp = path.resolve(__dirname, `${nanoid()}.docx`);
@@ -44,18 +44,32 @@ const removeTempFile = (file: string): Promise<void> => {
 
 const convertDocx = (file: string): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
-    exec(
-      `unoconv -f pdf --stdout ${file}`,
-      { cwd: path.resolve(__dirname) },
-      (err, stdout: any, stderr) => {
-        if (err) {
-          reject(err);
-        }
-        if (stderr) {
-          reject(new Error(stderr));
-        }
-        resolve(Buffer.concat(stdout));
+    let args;
+    let child;
+    const bin = 'unoconv';
+    const stdout = [];
+    const stderr = [];
+
+    args = ['-f' + 'pdf', '--stdout'];
+
+    args.push(file);
+
+    child = child_process.spawn(bin, args, { cwd: path.resolve(__dirname) });
+
+    child.stdout.on('data', data => {
+      stdout.push(data);
+    });
+
+    child.stderr.on('data', data => {
+      stderr.push(data);
+    });
+
+    child.on('exit', () => {
+      if (stderr.length) {
+        return reject(new Error(Buffer.concat(stderr).toString()));
       }
-    );
+
+      resolve(Buffer.concat(stdout));
+    });
   });
 };
